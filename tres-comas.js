@@ -217,7 +217,10 @@ let tresComas = function (mongoDBUri, port = 3007, options = {
 
         let Schema = this.mongoose.Schema;
         this.filesMSchema = new Schema({
-            url: {
+            urlFile: {
+                type: String
+            },
+            typeFile: {
                 type: String
             },
             name: {
