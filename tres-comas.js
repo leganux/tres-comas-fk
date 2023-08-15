@@ -28,6 +28,7 @@ const multer = require('multer')
 const multerS3 = require('multer-s3')
 
 const {v4: uuidv4} = require('uuid');
+const {validateFile} = require("./validateFile");
 
 require('dotenv').config()
 
@@ -437,10 +438,13 @@ let tresComas = function (mongoDBUri, port = 3007, options = {
                     for (let item of req.files) {
                         let token = uuidv4()
 
+                        let typeFile = validateFile(item.location)
+
 
                         if (el.engine == "aws-s3") {
                             let newfile = {
-                                url: item.location,
+                                urlFile: item.location,
+                                typeFile: typeFile,
                                 name: item.originalname,
                                 extension: item.contentType,
                                 filename: item?.filename || '',
@@ -511,10 +515,12 @@ let tresComas = function (mongoDBUri, port = 3007, options = {
                     for (let item of [files]) {
                         let token = uuidv4()
 
+                        let typeFile = validateFile(item.location)
 
                         if (el.engine == "aws-s3") {
                             let newfile = {
-                                url: item.location,
+                                urlFile: item.location,
+                                typeFile: typeFile,
                                 name: item.originalname,
                                 extension: item.contentType,
                                 filename: item?.filename || '',
